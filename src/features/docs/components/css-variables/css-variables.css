@@ -1,0 +1,45 @@
+@layer components {
+  .css-vars {
+    margin-block-end: var(--section-gap);
+    scroll-margin-block-start: 6rem;
+    border: 1px solid var(--border);
+    background: #fff;
+    padding: var(--space-8);
+  }
+
+  .css-vars__heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-heading);
+    font-size: var(--text-1);
+    font-weight: var(--font-semibold);
+    color: var(--primary);
+    border-block-end: 1px solid var(--border);
+    padding-block-end: var(--space-2);
+    margin-block-end: var(--space-8);
+    line-height: var(--leading-heading);
+  }
+
+  .css-vars__heading-icon {
+    color: var(--secondary);
+  }
+
+  .css-vars__desc {
+    font-size: var(--text-6);
+    line-height: var(--leading-normal);
+    color: var(--on-surface-variant);
+    margin-block-end: var(--space-6);
+    padding-inline-start: var(--space-4);
+    border-inline-start: 2px solid var(--border);
+  }
+
+  .css-vars__var {
+    color: var(--secondary);
+    font-weight: var(--font-bold);
+  }
+
+  .css-vars__default {
+    color: var(--primary);
+  }
+}

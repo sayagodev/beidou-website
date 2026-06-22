@@ -1,0 +1,151 @@
+@layer components {
+  .code-block {
+    position: relative;
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    overflow: hidden;
+
+    &:hover .code-block__copy {
+      opacity: 1;
+    }
+  }
+
+  .code-block__header {
+    display: flex;
+    border-block-end: 1px solid rgb(255 255 255 / 0.1);
+    background: rgb(0 0 0 / 0.2);
+    font-family: var(--font-code);
+    font-size: var(--text-7);
+    overflow-x: auto;
+  }
+
+  .code-block__tab {
+    padding: var(--space-2) var(--space-4);
+    color: rgb(255 255 255 / 0.6);
+    border: none;
+    background: none;
+    border-block-end: 2px solid transparent;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    white-space: nowrap;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+
+    &:hover {
+      color: #fff;
+      background: rgb(255 255 255 / 0.05);
+    }
+
+    &[aria-selected='true'] {
+      color: #fff;
+      border-block-end-color: var(--secondary);
+      background: var(--code-bg);
+    }
+  }
+
+  .code-block__body {
+    position: relative;
+    padding: var(--space-4);
+    overflow-x: auto;
+  }
+
+  .code-block__copy {
+    position: absolute;
+    inset-block-start: var(--space-4);
+    inset-inline-end: var(--space-4);
+    opacity: 0;
+    color: var(--outline);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-1);
+    transition: opacity var(--transition-fast), color var(--transition-fast);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .code-block pre {
+    margin: 0;
+    font-family: var(--font-code);
+    font-size: var(--text-8);
+    color: var(--code-foreground);
+    overflow-x: auto;
+    counter-reset: line;
+  }
+
+  .code-block code {
+    display: block;
+    font-family: inherit;
+  }
+
+  .code-block .line {
+    display: block;
+  }
+
+  .code-block .line::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    inline-size: 2em;
+    margin-inline-end: 1em;
+    color: rgb(255 255 255 / 0.2);
+    text-align: end;
+    user-select: none;
+  }
+
+  /* Syntax tokens */
+  .token-comment,
+  .token-prolog,
+  .token-doctype,
+  .token-cdata {
+    color: var(--code-comment);
+  }
+
+  .token-punctuation {
+    color: var(--code-punctuation);
+  }
+
+  .token-property,
+  .token-tag,
+  .token-boolean,
+  .token-number,
+  .token-constant,
+  .token-symbol,
+  .token-deleted {
+    color: var(--code-tag);
+  }
+
+  .token-selector,
+  .token-attr-name,
+  .token-string,
+  .token-char,
+  .token-builtin,
+  .token-inserted {
+    color: var(--code-string);
+  }
+
+  .token-operator,
+  .token-entity,
+  .token-url {
+    color: var(--code-punctuation);
+  }
+
+  .token-atrule,
+  .token-attr-value,
+  .token-keyword {
+    color: var(--code-keyword);
+  }
+
+  .token-function,
+  .token-class-name {
+    color: var(--code-function);
+  }
+
+  .token-regex,
+  .token-important,
+  .token-variable {
+    color: var(--code-regex);
+  }
+}

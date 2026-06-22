@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Beidou 北斗 - Keyboard Navigation Library</title>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "inverse-primary": "#abcaea",
+            "primary": "#4f6d8a", // Updated to Blue accent
+            "secondary-container": "#ffa6ae",
+            "tertiary": "#515062",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed": "#e3e0f7",
+            "error": "#ba1a1a",
+            "surface-variant": "#e4e2df",
+            "on-secondary-container": "#7b3840",
+            "secondary-fixed-dim": "#ffb2b8",
+            "on-secondary-fixed": "#3b0711",
+            "error-container": "#ffdad6",
+            "surface": "#fbf9f6", // Kept beige
+            "outline-variant": "#c3c7ce",
+            "on-primary-fixed": "#001d33",
+            "primary-fixed-dim": "#abcaea",
+            "on-surface": "#1b1c1a",
+            "surface-bright": "#fbf9f6",
+            "primary-fixed": "#cee5ff",
+            "on-primary": "#ffffff",
+            "surface-dim": "#dbdad7",
+            "on-tertiary-container": "#ebe8ff",
+            "tertiary-container": "#69687b",
+            "on-tertiary-fixed": "#1a1a2a",
+            "on-error": "#ffffff",
+            "on-primary-container": "#deedff",
+            "tertiary-fixed-dim": "#c6c4da",
+            "surface-container-lowest": "#ffffff",
+            "inverse-on-surface": "#f2f0ed",
+            "outline": "#73777e",
+            "on-error-container": "#93000a",
+            "primary-container": "#4f6d8a", // Blue accent
+            "on-tertiary-fixed-variant": "#464557",
+            "secondary": "#d4838b", // Rose accent
+            "background": "#fbf9f6", // Kept beige
+            "surface-container-high": "#eae8e5",
+            "surface-container-highest": "#e4e2df",
+            "on-primary-fixed-variant": "#2b4965",
+            "surface-tint": "#4f6d8a", // Blue accent
+            "on-secondary-fixed-variant": "#73323a",
+            "on-surface-variant": "#43474d",
+            "inverse-surface": "#30312f",
+            "surface-container-low": "#f5f3f0",
+            "surface-container": "#efeeeb",
+            "on-tertiary": "#ffffff",
+            "secondary-fixed": "#ffdadb",
+            "on-background": "#1b1c1a"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "sidebar-width": "280px",
+            "container-max": "1280px",
+            "stack-md": "12px",
+            "stack-sm": "4px",
+            "gutter": "24px",
+            "base": "8px",
+            "section-gap": "64px"
+          },
+          fontSize: {
+            "body-md": ["14px", {lineHeight: "1.6", fontWeight: "400"}], // Slightly smaller for terminal feel
+            "headline-lg": ["32px", {lineHeight: "1.3", fontWeight: "600"}],
+            "display": ["48px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700"}],
+            "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "600"}],
+            "label-md": ["14px", {lineHeight: "1.0", fontWeight: "500"}],
+            "headline-lg-mobile": ["24px", {lineHeight: "1.3", fontWeight: "600"}],
+            "code-sm": ["13px", {lineHeight: "1.5", fontWeight: "400"}],
+            "body-lg": ["16px", {lineHeight: "1.6", fontWeight: "400"}] // Slightly smaller for terminal feel
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+      color: #8b949e;
+    }
+
+    .token.punctuation {
+      color: #c9d1d9;
+    }
+
+    .token.namespace {
+      opacity: .7;
+    }
+
+    .token.property,
+    .token.tag,
+    .token.boolean,
+    .token.number,
+    .token.constant,
+    .token.symbol,
+    .token.deleted {
+      color: #d4838b;
+    }
+
+    /* Rose */
+    .token.selector,
+    .token.attr-name,
+    .token.string,
+    .token.char,
+    .token.builtin,
+    .token.inserted {
+      color: #4f6d8a;
+    }
+
+    /* Blue */
+    .token.operator,
+    .token.entity,
+    .token.url,
+    .language-css .token.string,
+    .style .token.string {
+      color: #c9d1d9;
+    }
+
+    .token.atrule,
+    .token.attr-value,
+    .token.keyword {
+      color: #d4838b;
+    }
+
+    /* Rose */
+    .token.function,
+    .token.class-name {
+      color: #4f6d8a;
+    }
+
+    /* Blue */
+    .token.regex,
+    .token.important,
+    .token.variable {
+      color: #ffa657;
+    }
+
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: theme('colors.secondary');
+      transition: width 0.2s ease-in-out;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+      border: 1px solid theme('colors.outline-variant');
+    }
+
+    th,
+    td {
+      border: 1px solid theme('colors.outline-variant');
+      padding: 0.75rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: theme('colors.surface-container');
+      font-weight: 600;
+      color: theme('colors.primary');
+    }
+
+    /* Line Numbers for Code Blocks */
+    pre {
+      counter-reset: line;
+    }
+
+    code>span.line::before {
+      counter-increment: line;
+      content: counter(line);
+      display: inline-block;
+      width: 2em;
+      margin-right: 1em;
+      color: #6e7681;
+      text-align: right;
+      user-select: none;
+    }
+
+    /* Custom Scrollbar for IDE feel */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: theme('colors.surface-container-low');
+      border-left: 1px solid theme('colors.outline-variant');
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: theme('colors.outline');
+      border-radius: 0px;
+      border: 2px solid theme('colors.surface-container-low');
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: theme('colors.primary');
+    }
+  </style>
+</head>
+
+<body
+  class="bg-surface text-on-surface font-body-md antialiased overflow-x-hidden selection:bg-secondary/30 selection:text-secondary flex flex-col min-h-screen">
+  <!-- TopNavBar (IDE Title Bar style) -->
+  <nav
+    class="bg-surface-container-lowest dark:bg-surface-dim border-b border-outline-variant fixed top-0 w-full z-50 transition-all duration-200 ease-in-out">
+    <div class="flex justify-between items-center max-w-container-max mx-auto px-gutter h-12">
+      <div class="flex items-center gap-4">
+        <a class="font-headline-md text-headline-md font-bold text-primary flex items-center gap-2" href="#">
+          <span class="material-symbols-outlined text-[20px] text-secondary">terminal</span> Beidou 北斗
+        </a>
+      </div>
+      <div class="hidden md:flex items-center gap-6">
+        <a class="nav-link text-on-surface-variant hover:text-secondary transition-colors font-label-md text-label-md"
+          href="#features">Features</a>
+        <a class="nav-link text-on-surface-variant hover:text-secondary transition-colors font-label-md text-label-md"
+          href="#docs">Docs</a>
+        <a class="nav-link text-on-surface-variant hover:text-secondary transition-colors font-label-md text-label-md"
+          href="#installation">Installation</a>
+        <a class="nav-link text-on-surface-variant hover:text-secondary transition-colors font-label-md text-label-md"
+          href="https://github.com" target="_blank">GitHub</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a class="hidden md:inline-flex items-center justify-center bg-primary text-white border border-primary px-3 py-1 text-sm font-label-md hover:bg-surface-tint transition-colors duration-200"
+          href="#installation">Get Started</a>
+        <button class="md:hidden text-on-surface p-2" id="mobile-menu-btn">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <!-- Main Content Layout -->
+  <div class="max-w-container-max mx-auto px-gutter pt-16 pb-12 flex flex-col md:flex-row gap-gutter flex-1 w-full">
+    <!-- Sidebar Navigation (File Tree Style) -->
+    <aside
+      class="hidden md:block w-sidebar-width shrink-0 sticky top-16 h-[calc(100vh-6rem)] overflow-y-auto pr-4 border-r border-outline-variant py-4">
+      <nav class="flex flex-col gap-0.5 font-code-sm">
+        <div class="flex items-center gap-2 text-on-surface-variant mb-1 mt-2 px-2 select-none group cursor-pointer">
+          <span
+            class="material-symbols-outlined text-[16px] group-hover:text-primary transition-colors">folder_open</span>
+          <span class="uppercase tracking-wider font-bold text-xs text-primary">Getting Started</span>
+        </div>
+        <div class="pl-4 flex flex-col gap-0.5 border-l border-outline-variant/50 ml-4 mb-4">
+          <a class="px-2 py-1 flex items-center gap-2 text-primary bg-primary/10 border-l-2 border-primary -ml-[1px]"
+            href="#hero">
+            <span class="material-symbols-outlined text-[14px]">description</span> Introduction
+          </a>
+          <a class="px-2 py-1 flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors -ml-[1px] border-l-2 border-transparent hover:border-outline-variant"
+            href="#features">
+            <span class="material-symbols-outlined text-[14px]">description</span> Features
+          </a>
+          <a class="px-2 py-1 flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors -ml-[1px] border-l-2 border-transparent hover:border-outline-variant"
+            href="#how-it-works">
+            <span class="material-symbols-outlined text-[14px]">description</span> How it Works
+          </a>
+          <a class="px-2 py-1 flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors -ml-[1px] border-l-2 border-transparent hover:border-outline-variant"
+            href="#installation">
+            <span class="material-symbols-outlined text-[14px]">description</span> Installation
+          </a>
+        </div>
+        <div class="flex items-center gap-2 text-on-surface-variant mb-1 px-2 select-none group cursor-pointer">
+          <span class="material-symbols-outlined text-[16px] group-hover:text-secondary transition-colors">folder</span>
+          <span class="uppercase tracking-wider font-bold text-xs text-secondary">API Reference</span>
+        </div>
+        <div class="pl-4 flex flex-col gap-0.5 border-l border-outline-variant/50 ml-4 mb-4">
+          <a class="px-2 py-1 flex items-center gap-2 text-on-surface-variant hover:text-secondary hover:bg-surface-container transition-colors -ml-[1px] border-l-2 border-transparent hover:border-outline-variant"
+            href="#attributes">
+            <span class="material-symbols-outlined text-[14px]">html</span> HTML Attributes
+          </a>
+          <a class="px-2 py-1 flex items-center gap-2 text-on-surface-variant hover:text-secondary hover:bg-surface-container transition-colors -ml-[1px] border-l-2 border-transparent hover:border-outline-variant"
+            href="#configuration">
+            <span class="material-symbols-outlined text-[14px]">settings</span> Configuration
+          </a>
+          <a class="px-2 py-1 flex items-center gap-2 text-on-surface-variant hover:text-secondary hover:bg-surface-container transition-colors -ml-[1px] border-l-2 border-transparent hover:border-outline-variant"
+            href="#css-variables">
+            <span class="material-symbols-outlined text-[14px]">css</span> CSS Variables
+          </a>
+          <a class="px-2 py-1 flex items-center gap-2 text-on-surface-variant hover:text-secondary hover:bg-surface-container transition-colors -ml-[1px] border-l-2 border-transparent hover:border-outline-variant"
+            href="#public-api">
+            <span class="material-symbols-outlined text-[14px]">api</span> Public API
+          </a>
+        </div>
+        <div class="flex items-center gap-2 text-on-surface-variant mb-1 px-2 select-none group cursor-pointer">
+          <span class="material-symbols-outlined text-[16px] group-hover:text-primary transition-colors">folder</span>
+          <span class="uppercase tracking-wider font-bold text-xs text-primary">Guides</span>
+        </div>
+        <div class="pl-4 flex flex-col gap-0.5 border-l border-outline-variant/50 ml-4 mb-4">
+          <a class="px-2 py-1 flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors -ml-[1px] border-l-2 border-transparent hover:border-outline-variant"
+            href="#frameworks">
+            <span class="material-symbols-outlined text-[14px]">integration_instructions</span> Framework Integration
+          </a>
+          <a class="px-2 py-1 flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors -ml-[1px] border-l-2 border-transparent hover:border-outline-variant"
+            href="#nested-menu">
+            <span class="material-symbols-outlined text-[14px]">account_tree</span> Nested Menus
+          </a>
+          <a class="px-2 py-1 flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors -ml-[1px] border-l-2 border-transparent hover:border-outline-variant"
+            href="#faq">
+            <span class="material-symbols-outlined text-[14px]">help_center</span> FAQ
+          </a>
+        </div>
+      </nav>
+    </aside>
+    <!-- Main Content Area -->
+    <main class="flex-1 min-w-0 pb-16 max-w-[800px] pt-4">
+      <!-- 1. HERO -->
+      <section class="mb-section-gap border border-outline-variant bg-white p-8 relative" id="hero">
+        <!-- Window controls mock -->
+        <div class="absolute top-2 left-2 flex gap-1.5">
+          <div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+          <div class="w-2.5 h-2.5 rounded-full bg-outline-variant"></div>
+          <div class="w-2.5 h-2.5 rounded-full bg-primary"></div>
+        </div>
+        <div class="flex items-center gap-4 mb-6 mt-4">
+          <h1 class="font-display text-display text-primary">Beidou</h1>
+          <div
+            class="bg-secondary text-white w-12 h-12 flex items-center justify-center font-display text-[32px] shadow-sm leading-none border border-secondary-container">
+            北</div>
+        </div>
+        <p class="font-headline-md text-headline-md text-secondary mb-4">Press a key. See shortcuts. Navigate.</p>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-2xl border-l-2 border-primary pl-4">
+          Keyboard navigation overlay — zero config, zero dependencies, ~2.7KB gzipped.</p>
+        <div class="flex flex-wrap gap-4 mb-12">
+          <a class="bg-primary text-white px-6 py-2 border border-primary hover:bg-surface-tint transition-colors font-label-md text-label-md flex items-center gap-2"
+            href="#installation">
+            Get Started <span class="material-symbols-outlined text-[18px]">keyboard_return</span>
+          </a>
+          <a class="bg-surface text-on-surface px-6 py-2 border border-outline-variant hover:bg-surface-container hover:border-primary transition-all font-label-md text-label-md flex items-center gap-2"
+            href="https://github.com" target="_blank">
+            <span class="material-symbols-outlined text-[18px]">code</span> GitHub
+          </a>
+        </div>
+        <!-- Visual Mockup -->
+        <div
+          class="relative bg-[#1e1e2e] border border-outline-variant p-12 flex items-center justify-center overflow-hidden font-code-sm">
+          <div class="absolute inset-0 opacity-10 pointer-events-none"
+            style="background-image: linear-gradient(theme('colors.primary') 1px, transparent 1px), linear-gradient(90deg, theme('colors.primary') 1px, transparent 1px); background-size: 20px 20px;">
+          </div>
+          <button
+            class="relative bg-surface text-primary border border-primary px-8 py-4 shadow-sm font-label-md text-label-md hover:bg-surface-container transition-colors group z-10 flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">add_box</span> Create New Project
+            <!-- Simulated Keycap Badge -->
+            <div
+              class="absolute -top-3 -right-3 bg-secondary text-white w-8 h-8 flex items-center justify-center font-code-sm text-code-sm border border-secondary shadow-sm group-hover:-translate-y-1 transition-transform">
+              A
+            </div>
+            <div
+              class="absolute inset-0 border border-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none -m-[1px]">
+            </div>
+          </button>
+        </div>
+      </section>
+      <!-- 2. FEATURES -->
+      <section class="mb-section-gap scroll-mt-24 border border-outline-variant bg-white p-8" id="features">
+        <h2
+          class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-primary border-b border-outline-variant pb-2 mb-8 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">star</span> Features
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border border-outline-variant bg-surface-container-low">
+          <!-- Feature Card 1 -->
+          <div class="border-b border-r border-outline-variant p-6 hover:bg-white transition-colors">
+            <div class="text-primary flex items-center gap-2 mb-2 font-headline-md">
+              <span class="material-symbols-outlined">package_2</span> Zero Dependencies
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant">Built entirely with vanilla JavaScript. No
+              external libraries required, ensuring maximum stability.</p>
+          </div>
+          <!-- Feature Card 2 -->
+          <div class="border-b border-outline-variant p-6 hover:bg-white transition-colors">
+            <div class="text-secondary flex items-center gap-2 mb-2 font-headline-md">
+              <span class="material-symbols-outlined">speed</span> Tiny Footprint
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant">Weighs in at approximately ~2.7KB gzipped. It
+              won't bloat your application bundle.</p>
+          </div>
+          <!-- Feature Card 3 -->
+          <div class="border-r border-outline-variant p-6 hover:bg-white transition-colors">
+            <div class="text-primary flex items-center gap-2 mb-2 font-headline-md">
+              <span class="material-symbols-outlined">extension</span> Framework Agnostic
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant">Works seamlessly with React, Vue, Svelte,
+              Angular, or plain HTML setups.</p>
+          </div>
+          <!-- Feature Card 4 -->
+          <div class="p-6 hover:bg-white transition-colors">
+            <div class="text-secondary flex items-center gap-2 mb-2 font-headline-md">
+              <span class="material-symbols-outlined">code</span> Full TypeScript
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant">First-class TypeScript support with
+              comprehensive type definitions included out of the box.</p>
+          </div>
+        </div>
+      </section>
+      <!-- 3. HOW IT WORKS -->
+      <section class="mb-section-gap scroll-mt-24 border border-outline-variant bg-white p-8" id="how-it-works">
+        <h2
+          class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-primary border-b border-outline-variant pb-2 mb-8 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">memory</span> How It Works
+        </h2>
+        <div class="flex flex-col md:flex-row gap-0 mb-12 border border-outline-variant bg-surface-container-low">
+          <div class="flex-1 border-b md:border-b-0 md:border-r border-outline-variant p-6 relative">
+            <h4 class="font-label-md text-label-md text-secondary mb-2 uppercase tracking-wide flex items-center gap-2">
+              <span
+                class="w-4 h-4 bg-secondary text-white text-[10px] flex items-center justify-center rounded-sm">1</span>
+              Step 1
+            </h4>
+            <p class="font-body-md text-body-md text-on-surface">Press <kbd
+                class="bg-surface border border-outline-variant border-b-2 px-1.5 py-0.5 font-code-sm text-code-sm text-primary mx-1">Alt</kbd>
+              (or configurable trigger key) to show badges.</p>
+          </div>
+          <div class="flex-1 border-b md:border-b-0 md:border-r border-outline-variant p-6 relative">
+            <h4 class="font-label-md text-label-md text-primary mb-2 uppercase tracking-wide flex items-center gap-2">
+              <span
+                class="w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-sm">2</span>
+              Step 2
+            </h4>
+            <p class="font-body-md text-body-md text-on-surface">Press the corresponding <kbd
+                class="bg-surface border border-outline-variant border-b-2 px-1.5 py-0.5 font-code-sm text-code-sm text-secondary mx-1">Letter</kbd>
+              to trigger action or enter context.</p>
+          </div>
+          <div class="flex-1 p-6 relative">
+            <h4 class="font-label-md text-label-md text-primary mb-2 uppercase tracking-wide flex items-center gap-2">
+              <span
+                class="w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-sm">3</span>
+              Step 3
+            </h4>
+            <p class="font-body-md text-body-md text-on-surface">Press <kbd
+                class="bg-surface border border-outline-variant border-b-2 px-1.5 py-0.5 font-code-sm text-code-sm text-primary mx-1">Esc</kbd>
+              or trigger key again to close.</p>
+          </div>
+        </div>
+        <!-- State Diagram -->
+        <div class="bg-[#1e1e2e] border border-outline-variant p-8 overflow-x-auto">
+          <h3
+            class="font-label-md text-label-md text-outline-variant mb-6 uppercase tracking-wider flex items-center gap-2">
+            <span class="material-symbols-outlined text-[16px]">account_tree</span> State Flow
+          </h3>
+          <div class="flex items-center justify-between min-w-[600px] text-white">
+            <!-- Inactive -->
+            <div class="flex flex-col items-center">
+              <div
+                class="w-24 h-10 border border-outline-variant bg-[#282a36] flex items-center justify-center font-code-sm text-code-sm text-outline-variant">
+                Inactive</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center px-4">
+              <span class="text-[12px] text-secondary mb-1 font-code-sm">Press Alt</span>
+              <div class="h-[1px] w-full bg-outline-variant relative">
+                <div
+                  class="absolute right-0 top-[-4px] w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[6px] border-l-outline-variant">
+                </div>
+              </div>
+            </div>
+            <!-- Active Root -->
+            <div class="flex flex-col items-center">
+              <div
+                class="w-28 h-10 border border-primary bg-primary/20 text-primary flex items-center justify-center font-code-sm text-code-sm shadow-[0_0_10px_rgba(79,109,138,0.3)]">
+                Active: Root</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center px-4">
+              <span class="text-[12px] text-secondary mb-1 font-code-sm">Press Context Key</span>
+              <div class="h-[1px] w-full bg-outline-variant relative">
+                <div
+                  class="absolute right-0 top-[-4px] w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[6px] border-l-outline-variant">
+                </div>
+              </div>
+            </div>
+            <!-- Active Sub -->
+            <div class="flex flex-col items-center">
+              <div
+                class="w-28 h-10 border border-secondary bg-secondary/20 text-secondary flex items-center justify-center font-code-sm text-code-sm shadow-[0_0_10px_rgba(212,131,139,0.3)]">
+                Active: Sub</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- 4. INSTALLATION -->
+      <section class="mb-section-gap scroll-mt-24 border border-outline-variant bg-white p-8" id="installation">
+        <h2
+          class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-primary border-b border-outline-variant pb-2 mb-8 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">download</span> Installation
+        </h2>
+        <div class="bg-[#1e1e2e] border border-outline-variant mb-6">
+          <!-- Tabs -->
+          <div class="flex border-b border-white/10 bg-black/20 font-code-sm">
+            <button class="px-4 py-2 text-sm text-white border-b-2 border-secondary bg-[#1e1e2e]">npm</button>
+            <button
+              class="px-4 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors border-b-2 border-transparent">pnpm</button>
+            <button
+              class="px-4 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors border-b-2 border-transparent">yarn</button>
+            <button
+              class="px-4 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors border-b-2 border-transparent">CDN</button>
+          </div>
+          <!-- Content -->
+          <div class="p-4 relative group">
+            <button aria-label="Copy code"
+              class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-outline-variant hover:text-white p-1">
+              <span class="material-symbols-outlined text-[18px]">content_copy</span>
+            </button>
+            <pre class="font-code-sm text-code-sm text-[#c9d1d9] overflow-x-auto m-0"><code class="block"><span
+                  class="line"><span class="token keyword">npm</span> install beidou-nav</span></code></pre>
+          </div>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-primary mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">play_arrow</span> Initialization
+        </h3>
+        <div class="bg-[#1e1e2e] border border-outline-variant">
+          <div class="p-4 relative group">
+            <button aria-label="Copy code"
+              class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-outline-variant hover:text-white p-1">
+              <span class="material-symbols-outlined text-[18px]">content_copy</span>
+            </button>
+            <pre class="font-code-sm text-code-sm text-[#c9d1d9] overflow-x-auto m-0"><code class="block"><span
+                  class="line"><span class="token keyword">import</span> Beidou <span class="token keyword">from</span>
+                  <span class="token string">'beidou-nav'</span><span class="token punctuation">;</span></span>
+                <span class="line"></span>
+                <span class="line"><span class="token comment">// Initialize with default options</span></span>
+                <span class="line"><span class="token keyword">const</span> beidou <span class="token operator">=</span>
+                  <span class="token keyword">new</span> <span class="token class-name">Beidou</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span></span>
+                <span class="line"></span>
+                <span class="line"><span class="token comment">// Or with custom options</span></span>
+                <span class="line"><span class="token keyword">const</span> beidouCustom <span
+                    class="token operator">=</span> <span class="token keyword">new</span> <span
+                    class="token class-name">Beidou</span><span class="token punctuation">(</span><span
+                    class="token punctuation">{</span></span>
+                <span class="line"> key<span class="token operator">:</span> <span
+                    class="token string">'Alt'</span><span class="token punctuation">,</span></span>
+                <span class="line"> position<span class="token operator">:</span> <span
+                    class="token string">'top-right'</span></span>
+                <span class="line"><span class="token punctuation">}</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span></span></code></pre>
+          </div>
+        </div>
+      </section>
+      <!-- 5. HTML ATTRIBUTES -->
+      <section class="mb-section-gap scroll-mt-24 border border-outline-variant bg-white p-8" id="attributes">
+        <h2
+          class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-primary border-b border-outline-variant pb-2 mb-8 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">html</span> HTML Attributes
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6 border-l-2 border-outline-variant pl-4">Beidou
+          uses data attributes to understand your navigation structure. Add these to your interactive elements.</p>
+        <div class="overflow-x-auto">
+          <table class="font-code-sm text-sm">
+            <thead>
+              <tr>
+                <th>Attribute</th>
+                <th>Description</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-secondary font-bold">data-ko-ctx</td>
+                <td class="text-on-surface-variant">Defines a navigation context. Elements with this attribute will
+                  reveal child targets when activated.</td>
+                <td class="text-primary bg-surface-container px-2 py-1">&lt;div data-ko-ctx="menu"&gt;...&lt;/div&gt;
+                </td>
+              </tr>
+              <tr>
+                <td class="text-secondary font-bold">data-ko-target</td>
+                <td class="text-on-surface-variant">Marks an element as a navigation target. Must be inside a context or
+                  the body (root context). The value is the key to press.</td>
+                <td class="text-primary bg-surface-container px-2 py-1">&lt;button
+                  data-ko-target="S"&gt;Save&lt;/button&gt;</td>
+              </tr>
+              <tr>
+                <td class="text-secondary font-bold">data-ko-back</td>
+                <td class="text-on-surface-variant">Used to navigate to the parent context.</td>
+                <td class="text-primary bg-surface-container px-2 py-1">&lt;button
+                  data-ko-back="B"&gt;Back&lt;/button&gt;</td>
+              </tr>
+              <tr>
+                <td class="text-secondary font-bold">data-ko-skip</td>
+                <td class="text-on-surface-variant">Instructs Beidou to ignore this element and its children.</td>
+                <td class="text-primary bg-surface-container px-2 py-1">&lt;div data-ko-skip&gt;...&lt;/div&gt;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <!-- 6. CONFIGURATION -->
+      <section class="mb-section-gap scroll-mt-24 border border-outline-variant bg-white p-8" id="configuration">
+        <h2
+          class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-primary border-b border-outline-variant pb-2 mb-8 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">settings</span> Configuration
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6 border-l-2 border-outline-variant pl-4">You can
+          customize Beidou's behavior by passing an options object to the constructor.</p>
+        <div class="bg-[#1e1e2e] border border-outline-variant">
+          <div class="p-4 relative group">
+            <button aria-label="Copy code"
+              class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-outline-variant hover:text-white p-1">
+              <span class="material-symbols-outlined text-[18px]">content_copy</span>
+            </button>
+            <pre class="font-code-sm text-code-sm text-[#c9d1d9] overflow-x-auto m-0"><code class="block"><span
+                  class="line"><span class="token keyword">const</span> options <span class="token operator">=</span>
+                  <span class="token punctuation">{</span></span>
+                <span class="line"> <span class="token comment">// Trigger key to toggle navigation mode</span></span>
+                <span class="line"> key<span class="token operator">:</span> <span
+                    class="token string">'Alt'</span><span class="token punctuation">,</span></span>
+                <span class="line"></span>
+                <span class="line"> <span class="token comment">// Key bindings configuration</span></span>
+                <span class="line"> keys<span class="token operator">:</span> <span
+                    class="token punctuation">{</span></span>
+                <span class="line"> <span class="token comment">// If true, ignores elements matching CSS
+                    selectors</span></span>
+                <span class="line"> ignore<span class="token operator">:</span> <span
+                    class="token punctuation">[</span><span class="token string">'input'</span><span
+                    class="token punctuation">,</span> <span class="token string">'textarea'</span><span
+                    class="token punctuation">,</span> <span class="token string">'[contenteditable]'</span><span
+                    class="token punctuation">]</span></span>
+                <span class="line"> <span class="token punctuation">}</span><span
+                    class="token punctuation">,</span></span>
+                <span class="line"></span>
+                <span class="line"> <span class="token comment">// Ring configuration</span></span>
+                <span class="line"> ring<span class="token operator">:</span> <span
+                    class="token punctuation">{</span></span>
+                <span class="line"> <span class="token comment">// Color of the focus ring</span></span>
+                <span class="line"> color<span class="token operator">:</span> <span
+                    class="token string">'#4f6d8a'</span><span class="token punctuation">,</span></span>
+                <span class="line"> <span class="token comment">// Width of the focus ring</span></span>
+                <span class="line"> width<span class="token operator">:</span> <span
+                    class="token string">'2px'</span><span class="token punctuation">,</span></span>
+                <span class="line"> <span class="token comment">// Offset of the focus ring</span></span>
+                <span class="line"> offset<span class="token operator">:</span> <span
+                    class="token string">'2px'</span></span>
+                <span class="line"> <span class="token punctuation">}</span><span
+                    class="token punctuation">,</span></span>
+                <span class="line"></span>
+                <span class="line"> <span class="token comment">// Badge configuration</span></span>
+                <span class="line"> badge<span class="token operator">:</span> <span
+                    class="token punctuation">{</span></span>
+                <span class="line"> <span class="token comment">// Default positioning of badges</span></span>
+                <span class="line"> position<span class="token operator">:</span> <span
+                    class="token string">'top-right'</span><span class="token punctuation">,</span> <span
+                    class="token comment">// 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'</span></span>
+                <span class="line"> <span class="token comment">// Background color</span></span>
+                <span class="line"> bg<span class="token operator">:</span> <span
+                    class="token string">'#4f6d8a'</span><span class="token punctuation">,</span></span>
+                <span class="line"> <span class="token comment">// Text color</span></span>
+                <span class="line"> color<span class="token operator">:</span> <span
+                    class="token string">'#ffffff'</span><span class="token punctuation">,</span></span>
+                <span class="line"> <span class="token comment">// Border radius</span></span>
+                <span class="line"> radius<span class="token operator">:</span> <span
+                    class="token string">'0px'</span></span>
+                <span class="line"> <span class="token punctuation">}</span></span>
+                <span class="line"><span class="token punctuation">}</span><span
+                    class="token punctuation">;</span></span>
+                <span class="line"></span>
+                <span class="line"><span class="token keyword">new</span> <span
+                    class="token class-name">Beidou</span><span class="token punctuation">(</span>options<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
+          </div>
+        </div>
+      </section>
+      <!-- 7. CSS VARIABLES -->
+      <section class="mb-section-gap scroll-mt-24 border border-outline-variant bg-white p-8" id="css-variables">
+        <h2
+          class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-primary border-b border-outline-variant pb-2 mb-8 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">palette</span> CSS Variables
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6 border-l-2 border-outline-variant pl-4">Beidou
+          injects CSS variables to style the focus ring and badges. You can override these in your own stylesheet.</p>
+        <div class="overflow-x-auto">
+          <table class="font-code-sm text-sm">
+            <thead>
+              <tr>
+                <th>Variable</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-secondary font-bold">--ko-ring-c</td>
+                <td class="text-primary">#4f6d8a</td>
+                <td class="text-on-surface-variant">Ring color</td>
+              </tr>
+              <tr>
+                <td class="text-secondary font-bold">--ko-ring-w</td>
+                <td class="text-primary">2px</td>
+                <td class="text-on-surface-variant">Ring width</td>
+              </tr>
+              <tr>
+                <td class="text-secondary font-bold">--ko-ring-o</td>
+                <td class="text-primary">2px</td>
+                <td class="text-on-surface-variant">Ring offset</td>
+              </tr>
+              <tr>
+                <td class="text-secondary font-bold">--ko-badge-bg</td>
+                <td class="text-primary">#4f6d8a</td>
+                <td class="text-on-surface-variant">Badge background</td>
+              </tr>
+              <tr>
+                <td class="text-secondary font-bold">--ko-badge-c</td>
+                <td class="text-primary">#ffffff</td>
+                <td class="text-on-surface-variant">Badge text color</td>
+              </tr>
+              <tr>
+                <td class="text-secondary font-bold">--ko-badge-r</td>
+                <td class="text-primary">0px</td>
+                <td class="text-on-surface-variant">Badge border radius</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <!-- 8. PUBLIC API -->
+      <section class="mb-section-gap scroll-mt-24 border border-outline-variant bg-white p-8" id="public-api">
+        <h2
+          class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-primary border-b border-outline-variant pb-2 mb-8 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">functions</span> Public API
+        </h2>
+        <div class="space-y-6">
+          <div class="border-l-2 border-secondary pl-4">
+            <h3 class="font-headline-md text-headline-md text-primary mb-2 font-code-sm">open()</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Manually opens the navigation overlay.</p>
+          </div>
+          <div class="border-l-2 border-secondary pl-4">
+            <h3 class="font-headline-md text-headline-md text-primary mb-2 font-code-sm">reset()</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Resets the navigation state to the root context
+              and hides badges.</p>
+          </div>
+          <div class="border-l-2 border-secondary pl-4">
+            <h3 class="font-headline-md text-headline-md text-primary mb-2 font-code-sm">destroy()</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Removes all event listeners and cleans up the
+              DOM.</p>
+          </div>
+        </div>
+      </section>
+      <!-- 9. FRAMEWORK INTEGRATION -->
+      <section class="mb-section-gap scroll-mt-24 border border-outline-variant bg-white p-8" id="frameworks">
+        <h2
+          class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-primary border-b border-outline-variant pb-2 mb-8 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">dashboard_customize</span> Framework Integration
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6 border-l-2 border-outline-variant pl-4">Beidou
+          works out of the box with most frameworks. Just ensure it initializes after the DOM is ready.</p>
+        <div class="bg-[#1e1e2e] border border-outline-variant">
+          <!-- Tabs -->
+          <div class="flex border-b border-white/10 bg-black/20 overflow-x-auto font-code-sm">
+            <button
+              class="px-4 py-2 text-sm text-white border-b-2 border-secondary bg-[#1e1e2e] whitespace-nowrap">React</button>
+            <button
+              class="px-4 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors border-b-2 border-transparent whitespace-nowrap">Vue
+              3</button>
+            <button
+              class="px-4 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors border-b-2 border-transparent whitespace-nowrap">Svelte</button>
+          </div>
+          <!-- Content -->
+          <div class="p-4 relative group">
+            <button aria-label="Copy code"
+              class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-outline-variant hover:text-white p-1">
+              <span class="material-symbols-outlined text-[18px]">content_copy</span>
+            </button>
+            <pre class="font-code-sm text-code-sm text-[#c9d1d9] overflow-x-auto m-0"><code class="block"><span
+                  class="line"><span class="token keyword">import</span> <span class="token punctuation">{</span>
+                  useEffect <span class="token punctuation">}</span> <span class="token keyword">from</span> <span
+                    class="token string">'react'</span><span class="token punctuation">;</span></span>
+                <span class="line"><span class="token keyword">import</span> Beidou <span
+                    class="token keyword">from</span> <span class="token string">'beidou-nav'</span><span
+                    class="token punctuation">;</span></span>
+                <span class="line"></span>
+                <span class="line"><span class="token keyword">export</span> <span class="token keyword">function</span>
+                  <span class="token function">useBeidou</span><span class="token punctuation">(</span>options<span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+                <span class="line"> <span class="token function">useEffect</span><span
+                    class="token punctuation">(</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span
+                    class="token punctuation">{</span></span>
+                <span class="line"> <span class="token keyword">const</span> beidou <span
+                    class="token operator">=</span> <span class="token keyword">new</span> <span
+                    class="token class-name">Beidou</span><span class="token punctuation">(</span>options<span
+                    class="token punctuation">)</span><span class="token punctuation">;</span></span>
+                <span class="line"> <span class="token keyword">return</span> <span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token operator">=&gt;</span> beidou<span class="token punctuation">.</span><span
+                    class="token function">destroy</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span></span>
+                <span class="line"> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                  <span class="token punctuation">[</span>options<span class="token punctuation">]</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span></span>
+                <span class="line"><span class="token punctuation">}</span></span></code></pre>
+          </div>
+        </div>
+      </section>
+      <!-- 10. NESTED MENUS -->
+      <section class="mb-section-gap scroll-mt-24 border border-outline-variant bg-white p-8" id="nested-menu">
+        <h2
+          class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-primary border-b border-outline-variant pb-2 mb-8 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">account_tree</span> Nested Menus
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6 border-l-2 border-outline-variant pl-4">Create
+          complex hierarchies using contexts.</p>
+        <div class="bg-[#1e1e2e] border border-outline-variant">
+          <div class="p-4 relative group">
+            <button aria-label="Copy code"
+              class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-outline-variant hover:text-white p-1">
+              <span class="material-symbols-outlined text-[18px]">content_copy</span>
+            </button>
+            <pre class="font-code-sm text-code-sm text-[#c9d1d9] overflow-x-auto m-0"><code class="block"><span
+                  class="line"><span class="token tag"><span class="token tag"><span
+                        class="token punctuation">&lt;</span>nav</span> <span
+                      class="token attr-name">data-ko-ctx</span><span class="token attr-value"><span
+                        class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>main<span
+                        class="token punctuation">"</span></span><span
+                      class="token punctuation">&gt;</span></span></span>
+                <span class="line"> <span class="token tag"><span class="token tag"><span
+                        class="token punctuation">&lt;</span>button</span> <span
+                      class="token attr-name">data-ko-target</span><span class="token attr-value"><span
+                        class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>S<span
+                        class="token punctuation">"</span></span><span
+                      class="token punctuation">&gt;</span></span>Settings<span class="token tag"><span
+                      class="token tag"><span class="token punctuation">&lt;/</span>button</span><span
+                      class="token punctuation">&gt;</span></span></span>
+                <span class="line"> </span>
+                <span class="line"> <span class="token tag"><span class="token tag"><span
+                        class="token punctuation">&lt;</span>div</span> <span
+                      class="token attr-name">data-ko-ctx</span><span class="token attr-value"><span
+                        class="token punctuation attr-equals">=</span><span
+                        class="token punctuation">"</span>settings<span class="token punctuation">"</span></span><span
+                      class="token punctuation">&gt;</span></span></span>
+                <span class="line"> <span class="token tag"><span class="token tag"><span
+                        class="token punctuation">&lt;</span>button</span> <span
+                      class="token attr-name">data-ko-target</span><span class="token attr-value"><span
+                        class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>P<span
+                        class="token punctuation">"</span></span><span
+                      class="token punctuation">&gt;</span></span>Profile<span class="token tag"><span
+                      class="token tag"><span class="token punctuation">&lt;/</span>button</span><span
+                      class="token punctuation">&gt;</span></span></span>
+                <span class="line"> <span class="token tag"><span class="token tag"><span
+                        class="token punctuation">&lt;</span>button</span> <span
+                      class="token attr-name">data-ko-target</span><span class="token attr-value"><span
+                        class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A<span
+                        class="token punctuation">"</span></span><span
+                      class="token punctuation">&gt;</span></span>Security<span class="token tag"><span
+                      class="token tag"><span class="token punctuation">&lt;/</span>button</span><span
+                      class="token punctuation">&gt;</span></span></span>
+                <span class="line"> <span class="token tag"><span class="token tag"><span
+                        class="token punctuation">&lt;</span>button</span> <span
+                      class="token attr-name">data-ko-back</span><span class="token attr-value"><span
+                        class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Esc<span
+                        class="token punctuation">"</span></span><span
+                      class="token punctuation">&gt;</span></span>Back<span class="token tag"><span
+                      class="token tag"><span class="token punctuation">&lt;/</span>button</span><span
+                      class="token punctuation">&gt;</span></span></span>
+                <span class="line"> <span class="token tag"><span class="token tag"><span
+                        class="token punctuation">&lt;/</span>div</span><span
+                      class="token punctuation">&gt;</span></span></span>
+                <span class="line"><span class="token tag"><span class="token tag"><span
+                        class="token punctuation">&lt;/</span>nav</span><span
+                      class="token punctuation">&gt;</span></span></span></code></pre>
+          </div>
+        </div>
+      </section>
+      <!-- 11. FAQ -->
+      <section class="mb-section-gap scroll-mt-24 border border-outline-variant bg-white p-8" id="faq">
+        <h2
+          class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-primary border-b border-outline-variant pb-2 mb-8 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">help</span> FAQ
+        </h2>
+        <div class="space-y-6">
+          <div class="border-l-2 border-outline-variant pl-4">
+            <h3 class="font-headline-md text-headline-md text-primary mb-2">Badges not appearing?</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Check your z-index context. The overlay needs
+              to sit above your content. Also ensure parent elements don't have `overflow: hidden` hiding the absolute
+              badges.</p>
+          </div>
+          <div class="border-l-2 border-outline-variant pl-4">
+            <h3 class="font-headline-md text-headline-md text-primary mb-2">Multiple instances?</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Only initialize Beidou once per page. If you're
+              in an SPA, ensure you call `.destroy()` when the component unmounts before creating a new instance.</p>
+          </div>
+          <div class="border-l-2 border-outline-variant pl-4">
+            <h3 class="font-headline-md text-headline-md text-primary mb-2">Shadow DOM?</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Currently, Beidou does not deeply traverse open
+              Shadow DOM boundaries automatically. You may need to manage contexts manually if using web components
+              extensively.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <!-- Status Bar (Footer) -->
+  <footer
+    class="bg-primary text-white w-full py-1 border-t border-primary-fixed-variant fixed bottom-0 z-50 font-code-sm text-xs flex justify-between px-4 items-center">
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1"><span
+          class="material-symbols-outlined text-[14px] text-secondary">terminal</span> Beidou Project</span>
+      <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">description</span> MIT
+        License</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <a class="hover:text-secondary transition-colors flex items-center gap-1" href="#docs"><span
+          class="material-symbols-outlined text-[14px]">menu_book</span> Docs</a>
+      <a class="hover:text-secondary transition-colors flex items-center gap-1" href="https://github.com"><span
+          class="material-symbols-outlined text-[14px]">code</span> GitHub</a>
+      <a class="hover:text-secondary transition-colors flex items-center gap-1" href="#"><span
+          class="material-symbols-outlined text-[14px]">forum</span> Discord</a>
+      <span>UTF-8</span>
+      <span>v1.0.0</span>
+    </div>
+  </footer>
+</body>
+
+</html>

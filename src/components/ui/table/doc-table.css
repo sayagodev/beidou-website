@@ -1,0 +1,33 @@
+@layer components {
+  .doc-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-code);
+      font-size: var(--text-7);
+    }
+
+    th,
+    td {
+      border: 1px solid var(--border);
+      padding: var(--space-3);
+      text-align: start;
+    }
+
+    th {
+      background: var(--surface-container);
+      font-weight: var(--font-semibold);
+      color: var(--primary);
+    }
+
+    td code {
+      background: var(--surface-container);
+      padding: var(--space-1) var(--space-2);
+      font-size: var(--text-8);
+      color: var(--primary);
+    }
+  }
+}

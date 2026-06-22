@@ -1,0 +1,27 @@
+@layer components {
+  .docs-view {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-block-size: 100dvh;
+    padding-block-start: calc(var(--nav-height));
+  }
+
+  .docs-view__layout {
+    display: flex;
+    max-inline-size: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    padding-block: var(--space-12);
+    flex: 1;
+    gap: var(--gutter);
+    inline-size: 100%;
+  }
+
+  .docs-view__content {
+    flex: 1;
+    min-inline-size: 0;
+    max-inline-size: var(--content-max);
+    padding-block: var(--space-4);
+  }
+}
