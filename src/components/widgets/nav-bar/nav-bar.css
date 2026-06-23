@@ -24,6 +24,10 @@
     font-size: var(--text-3);
     font-weight: var(--font-bold);
     color: var(--primary);
+
+    & span {
+      font-family: var(--font-beidou);
+    }
   }
 
   .nav-bar__cta {

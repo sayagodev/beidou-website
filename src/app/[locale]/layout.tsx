@@ -2,8 +2,20 @@ import type { Metadata } from "next";
 import type { NextLayoutIntlayer } from "next-intlayer";
 import Script from "next/script";
 import { JetBrains_Mono, Inter } from "next/font/google";
+import localFont from "next/font/local";
 
 import { Providers } from "../providers";
+
+const beidou = localFont({
+  src: [
+    {
+      path: "../../../public/font/hanyi-olive-body-jane.woff2",
+      weight: "100 900",
+      style: "normal"
+    },
+  ],
+  variable: '--font-beidou'
+})
 
 const jetBrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
@@ -24,7 +36,7 @@ const LocaleLayout: NextLayoutIntlayer = async ({ children, params }) => {
   const { locale } = await params
 
   return (
-    <html lang={locale} className={`${jetBrainsMono.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang={locale} className={`${jetBrainsMono.variable} ${inter.variable} ${beidou.variable}`} suppressHydrationWarning>
       <body data-ko-ctx="root">
         <Providers locale={locale}>
           {children}

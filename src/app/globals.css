@@ -157,6 +157,7 @@
     --font-heading: var(--font-jetbrains-mono);
     --font-label: var(--font-jetbrains-mono);
     --font-code: var(--font-jetbrains-mono);
+    --font-beidou: var(--font-beidou);
 
     --text-display: clamp(2.5rem, 2rem + 2vw, 3rem);
     --text-1: clamp(1.5rem, 1.3rem + 1vw, 2rem);

@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useActiveSection } from '../hooks/use-active-section'
 import { NavBar } from '@/components/widgets/nav-bar'
 import { Sidebar } from '@/components/widgets/sidebar'
-import { useActiveSection } from '../hooks/use-active-section'
 import { Hero } from '../components/hero'
 import { FeaturesGrid } from '../components/features-grid'
 import { HowItWorks } from '../components/how-it-works'
