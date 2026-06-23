@@ -9,7 +9,7 @@ const installationContent = {
     }),
     initHeading: t({
       en: 'Initialization',
-      es: 'Inicializacion',
+      es: 'Inicialización',
     }),
     npm: 'npm',
     pnpm: 'pnpm',

@@ -1,5 +1,6 @@
 import { useIntlayer } from 'next-intlayer/server'
 import { DocTable } from '@/components/ui/table'
+import { Code2 } from 'lucide-react'
 import './attributes-table.css'
 
 export function AttributesTable() {
@@ -35,13 +36,18 @@ export function AttributesTable() {
   ]
 
   return (
-    <section className="attributes" id="attributes">
-      <h2 className="attributes__heading">
-        <span className="material-symbols-outlined attributes__heading-icon">html</span>
+    <section className="section" id="attributes">
+      <div className="window-dots">
+        <div className="window-dot" style={{ background: 'var(--secondary)' }} />
+        <div className="window-dot" style={{ background: 'var(--outline-variant)' }} />
+        <div className="window-dot" style={{ background: 'var(--primary)' }} />
+      </div>
+      <h2 className="section__heading">
+        <Code2 className="section__heading-icon" />
         {content.heading}
       </h2>
 
-      <p className="attributes__desc">{content.desc}</p>
+      <p className="section__desc">{content.desc}</p>
 
       <DocTable columns={columns} rows={rows} />
     </section>

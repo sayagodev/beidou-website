@@ -8,6 +8,7 @@ export default function BeidouProvider() {
 
   useEffect(() => {
     nav.current = new Beidou({})
+
     return () => nav.current?.destroy()
   }, [])
 

@@ -1,30 +1,4 @@
 @layer components {
-  .public-api {
-    margin-block-end: var(--section-gap);
-    scroll-margin-block-start: 6rem;
-    border: 1px solid var(--border);
-    background: #fff;
-    padding: var(--space-8);
-  }
-
-  .public-api__heading {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-family: var(--font-heading);
-    font-size: var(--text-1);
-    font-weight: var(--font-semibold);
-    color: var(--primary);
-    border-block-end: 1px solid var(--border);
-    padding-block-end: var(--space-2);
-    margin-block-end: var(--space-8);
-    line-height: var(--leading-heading);
-  }
-
-  .public-api__heading-icon {
-    color: var(--secondary);
-  }
-
   .public-api__methods {
     display: flex;
     flex-direction: column;
@@ -46,6 +20,7 @@
   }
 
   .public-api__method-desc {
+    font-family: var(--font-label);
     font-size: var(--text-6);
     line-height: var(--leading-normal);
     color: var(--on-surface-variant);

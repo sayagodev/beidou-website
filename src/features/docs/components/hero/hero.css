@@ -63,7 +63,7 @@
   }
 
   .hero__description {
-    font-family: var(--font-body);
+    font-family: var(--font-label);
     font-size: var(--text-4);
     line-height: var(--leading-normal);
     color: var(--on-surface-variant);

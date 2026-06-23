@@ -11,7 +11,7 @@ export const SIDEBAR_SECTIONS: Array<{
         { id: 'hero', label: { en: 'Introduction', es: 'Introduccion' }, icon: 'description' },
         { id: 'features', label: { en: 'Features', es: 'Caracteristicas' }, icon: 'description' },
         { id: 'how-it-works', label: { en: 'How it Works', es: 'Como Funciona' }, icon: 'description' },
-        { id: 'installation', label: { en: 'Installation', es: 'Instalacion' }, icon: 'description' },
+        { id: 'installation', label: { en: 'Installation', es: 'Instalación' }, icon: 'description' },
       ],
     },
     {

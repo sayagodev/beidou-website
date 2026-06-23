@@ -6,9 +6,14 @@ export function HowItWorks() {
   const content = useIntlayer('how-it-works')
 
   return (
-    <section className="how-it-works" id="how-it-works">
-      <h2 className="how-it-works__heading">
-        <Cpu className='how-it-works__heading-icon' />
+    <section className="section" id="how-it-works">
+      <div className="window-dots">
+        <div className="window-dot" style={{ background: 'var(--secondary)' }} />
+        <div className="window-dot" style={{ background: 'var(--outline-variant)' }} />
+        <div className="window-dot" style={{ background: 'var(--primary)' }} />
+      </div>
+      <h2 className="section__heading">
+        <Cpu className='section__heading-icon' />
         {content.heading}
       </h2>
 

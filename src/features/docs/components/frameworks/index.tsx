@@ -1,13 +1,11 @@
 'use client'
 
-import { useState } from 'react'
 import { useIntlayer } from 'next-intlayer'
 import { CodeBlock } from '@/components/ui/code-block'
-import './frameworks.css'
+import { LayoutTemplate } from 'lucide-react'
 
 export function Frameworks() {
   const content = useIntlayer('frameworks')
-  const [activeTab, setActiveTab] = useState(0)
 
   const tabs = [
     { label: content.react, code: content.reactCode, language: 'jsx' },
@@ -16,13 +14,18 @@ export function Frameworks() {
   ]
 
   return (
-    <section className="frameworks" id="frameworks">
-      <h2 className="frameworks__heading">
-        <span className="material-symbols-outlined frameworks__heading-icon">dashboard_customize</span>
+    <section className="section" id="frameworks">
+      <div className="window-dots">
+        <div className="window-dot" style={{ background: 'var(--secondary)' }} />
+        <div className="window-dot" style={{ background: 'var(--outline-variant)' }} />
+        <div className="window-dot" style={{ background: 'var(--primary)' }} />
+      </div>
+      <h2 className="section__heading">
+        <LayoutTemplate className="section__heading-icon" />
         {content.heading}
       </h2>
 
-      <p className="frameworks__desc">{content.desc}</p>
+      <p className="section__desc">{content.desc}</p>
 
       <CodeBlock tabs={tabs} />
     </section>

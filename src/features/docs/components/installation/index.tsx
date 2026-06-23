@@ -1,5 +1,6 @@
 import { useIntlayer } from 'next-intlayer/server'
 import { CodeBlock } from '@/components/ui/code-block'
+import { Download, Play } from 'lucide-react'
 import './installation.css'
 
 export function Installation() {
@@ -13,16 +14,21 @@ export function Installation() {
   ]
 
   return (
-    <section className="installation" id="installation">
-      <h2 className="installation__heading">
-        <span className="material-symbols-outlined installation__heading-icon">download</span>
+    <section className="section" id="installation">
+      <div className="window-dots">
+        <div className="window-dot" style={{ background: 'var(--secondary)' }} />
+        <div className="window-dot" style={{ background: 'var(--outline-variant)' }} />
+        <div className="window-dot" style={{ background: 'var(--primary)' }} />
+      </div>
+      <h2 className="section__heading">
+        <Download className="section__heading-icon" />
         {content.heading}
       </h2>
 
       <CodeBlock tabs={tabs} />
 
       <h3 className="installation__init-heading">
-        <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>play_arrow</span>
+        <Play style={{ fontSize: '18px' }} />
         {content.initHeading}
       </h3>
 

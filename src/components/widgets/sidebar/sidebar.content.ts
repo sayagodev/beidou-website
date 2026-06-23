@@ -29,7 +29,7 @@ const sidebarContent = {
     }),
     installation: t({
       en: 'Installation',
-      es: 'Instalacion',
+      es: 'Instalación',
     }),
     htmlAttributes: t({
       en: 'HTML Attributes',

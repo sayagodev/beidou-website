@@ -13,9 +13,14 @@ export function FeaturesGrid() {
   ]
 
   return (
-    <section className="features" id="features">
-      <h2 className="features__heading">
-        <Star className='features__heading-icon' />
+    <section className="section" id="features">
+      <div className="window-dots">
+        <div className="window-dot" style={{ background: 'var(--secondary)' }} />
+        <div className="window-dot" style={{ background: 'var(--outline-variant)' }} />
+        <div className="window-dot" style={{ background: 'var(--primary)' }} />
+      </div>
+      <h2 className="section__heading">
+        <Star className='section__heading-icon' />
         {content.heading}
       </h2>
 

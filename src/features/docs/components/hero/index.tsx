@@ -40,7 +40,7 @@ export function Hero() {
 
       <div className="hero__mockup">
         <div className="hero__mockup-grid" />
-        <button className="hero__mockup-btn">
+        <button className="hero__mockup-btn" data-ko-skip>
           <SquarePlus className="hero__btn--icon" />
           {content.createProject}
           <div className="hero__keycap">A</div>

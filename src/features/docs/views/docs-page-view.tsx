@@ -16,6 +16,7 @@ import { Frameworks } from '../components/frameworks'
 import { NestedMenus } from '../components/nested-menus'
 import { Faq } from '../components/faq'
 import './docs-page-view.css'
+import { Footer } from '@/components/widgets/footer'
 
 export function DocsPageView() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -42,6 +43,7 @@ export function DocsPageView() {
             <Frameworks />
             <NestedMenus />
             <Faq />
+            <Footer />
           </main>
         </div>
       </div>
