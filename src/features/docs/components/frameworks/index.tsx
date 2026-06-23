@@ -10,9 +10,9 @@ export function Frameworks() {
   const [activeTab, setActiveTab] = useState(0)
 
   const tabs = [
-    { label: content.react, code: content.reactCode },
-    { label: content.vue, code: content.vueCode },
-    { label: content.svelte, code: content.svelteCode },
+    { label: content.react, code: content.reactCode, language: 'jsx' },
+    { label: content.vue, code: content.vueCode, language: 'javascript' },
+    { label: content.svelte, code: content.svelteCode, language: 'javascript' },
   ]
 
   return (

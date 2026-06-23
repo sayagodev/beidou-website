@@ -1,151 +1,158 @@
-@layer components {
-  .code-block {
-    position: relative;
-    background: var(--code-bg);
-    border: 1px solid var(--code-border);
-    overflow: hidden;
+.code-block {
+  position: relative;
+  background: #1e1e2e;
+  border: 1px solid #2b2b3f;
+  overflow: hidden;
 
-    &:hover .code-block__copy {
-      opacity: 1;
-    }
+  &:hover .code-block__copy {
+    opacity: 1;
+  }
+}
+
+.code-block__header {
+  display: flex;
+  border-block-end: 1px solid rgb(255 255 255 / 0.1);
+  background: rgb(0 0 0 / 0.2);
+  font-family: var(--font-code);
+  font-size: var(--text-7);
+  overflow-x: auto;
+}
+
+.code-block__tab {
+  padding: var(--space-2) var(--space-4);
+  color: rgb(255 255 255 / 0.6);
+  border: none;
+  background: none;
+  border-block-end: 2px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  white-space: nowrap;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+
+  &:hover {
+    color: #fff;
+    background: rgb(255 255 255 / 0.05);
   }
 
-  .code-block__header {
-    display: flex;
-    border-block-end: 1px solid rgb(255 255 255 / 0.1);
-    background: rgb(0 0 0 / 0.2);
-    font-family: var(--font-code);
-    font-size: var(--text-7);
-    overflow-x: auto;
+  &[aria-selected='true'] {
+    color: #fff;
+    border-block-end-color: var(--secondary);
+    background: #1e1e2e;
+  }
+}
+
+.code-block__body {
+  position: relative;
+  padding: var(--space-4);
+  overflow-x: auto;
+}
+
+.code-block__copy {
+  position: absolute;
+  inset-block-start: var(--space-4);
+  inset-inline-end: var(--space-4);
+  opacity: 0;
+  color: rgb(255 255 255 / 0.5);
+  background: rgb(0 0 0 / 0.3);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  cursor: pointer;
+  border-radius: var(--radius-medium);
+  padding: var(--space-1);
+  transition: opacity var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
+
+  &:hover {
+    color: #fff;
+    background: rgb(255 255 255 / 0.1);
   }
 
-  .code-block__tab {
-    padding: var(--space-2) var(--space-4);
-    color: rgb(255 255 255 / 0.6);
-    border: none;
-    background: none;
-    border-block-end: 2px solid transparent;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: inherit;
-    white-space: nowrap;
-    transition: color var(--transition-fast), border-color var(--transition-fast);
-
-    &:hover {
-      color: #fff;
-      background: rgb(255 255 255 / 0.05);
-    }
-
-    &[aria-selected='true'] {
-      color: #fff;
-      border-block-end-color: var(--secondary);
-      background: var(--code-bg);
-    }
+  & svg {
+    width: var(--text-4);
+    height: var(--text-4);
   }
+}
 
-  .code-block__body {
-    position: relative;
-    padding: var(--space-4);
-    overflow-x: auto;
-  }
+.code-block pre {
+  margin: 0;
+  font-family: var(--font-code);
+  font-size: var(--text-8);
+  background-color: var(--code-bg);
+  color: #eaeaea;
+  overflow-x: auto;
+  counter-reset: line;
+  line-height: 1;
+}
 
-  .code-block__copy {
-    position: absolute;
-    inset-block-start: var(--space-4);
-    inset-inline-end: var(--space-4);
-    opacity: 0;
-    color: var(--outline);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: var(--space-1);
-    transition: opacity var(--transition-fast), color var(--transition-fast);
+.code-block code {
+  display: block;
+  font-family: inherit;
+}
 
-    &:hover {
-      color: #fff;
-    }
-  }
+.code-block .line {
+  display: block;
+}
 
-  .code-block pre {
-    margin: 0;
-    font-family: var(--font-code);
-    font-size: var(--text-8);
-    color: var(--code-foreground);
-    overflow-x: auto;
-    counter-reset: line;
-  }
+.code-block .line::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  inline-size: 2em;
+  margin-inline-end: 1em;
+  color: rgb(255 255 255 / 0.15);
+  text-align: end;
+  user-select: none;
+}
 
-  .code-block code {
-    display: block;
-    font-family: inherit;
-  }
+/* Syntax tokens */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--code-comment);
+}
 
-  .code-block .line {
-    display: block;
-  }
+.token.punctuation {
+  color: var(--code-punctuation);
+}
 
-  .code-block .line::before {
-    counter-increment: line;
-    content: counter(line);
-    display: inline-block;
-    inline-size: 2em;
-    margin-inline-end: 1em;
-    color: rgb(255 255 255 / 0.2);
-    text-align: end;
-    user-select: none;
-  }
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: var(--code-tag);
+}
 
-  /* Syntax tokens */
-  .token-comment,
-  .token-prolog,
-  .token-doctype,
-  .token-cdata {
-    color: var(--code-comment);
-  }
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: var(--code-string);
+}
 
-  .token-punctuation {
-    color: var(--code-punctuation);
-  }
+.token.operator,
+.token.entity,
+.token.url {
+  color: var(--code-punctuation);
+}
 
-  .token-property,
-  .token-tag,
-  .token-boolean,
-  .token-number,
-  .token-constant,
-  .token-symbol,
-  .token-deleted {
-    color: var(--code-tag);
-  }
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: var(--code-keyword);
+}
 
-  .token-selector,
-  .token-attr-name,
-  .token-string,
-  .token-char,
-  .token-builtin,
-  .token-inserted {
-    color: var(--code-string);
-  }
+.token.function,
+.token.class-name {
+  color: var(--code-function);
+}
 
-  .token-operator,
-  .token-entity,
-  .token-url {
-    color: var(--code-punctuation);
-  }
-
-  .token-atrule,
-  .token-attr-value,
-  .token-keyword {
-    color: var(--code-keyword);
-  }
-
-  .token-function,
-  .token-class-name {
-    color: var(--code-function);
-  }
-
-  .token-regex,
-  .token-important,
-  .token-variable {
-    color: var(--code-regex);
-  }
+.token.regex,
+.token.important,
+.token.variable {
+  color: var(--code-regex);
 }

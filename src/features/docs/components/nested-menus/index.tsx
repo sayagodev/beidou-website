@@ -14,7 +14,7 @@ export function NestedMenus() {
 
       <p className="nested-menus__desc">{content.desc}</p>
 
-      <CodeBlock code={content.code} />
+      <CodeBlock code={content.code} language="markup" />
     </section>
   )
 }

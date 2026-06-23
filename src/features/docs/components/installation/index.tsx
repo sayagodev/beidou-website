@@ -6,10 +6,10 @@ export function Installation() {
   const content = useIntlayer('installation')
 
   const tabs = [
-    { label: content.npm, code: content.installCmd },
-    { label: content.pnpm, code: 'pnpm add beidou-nav' },
-    { label: content.yarn, code: 'yarn add beidou-nav' },
-    { label: content.cdn, code: '<script src="https://unpkg.com/beidou-nav"></script>' },
+    { label: content.npm, code: content.installCmd, language: 'bash' },
+    { label: content.pnpm, code: 'pnpm add @sayagodev/beidou', language: 'bash' },
+    { label: content.yarn, code: 'yarn add @sayagodev/beidou', language: 'bash' },
+    { label: content.cdn, code: '<script src="https://unpkg.com/@sayagodev/beidou"></script>', language: 'markup' },
   ]
 
   return (
@@ -26,7 +26,7 @@ export function Installation() {
         {content.initHeading}
       </h3>
 
-      <CodeBlock code={content.initCode} />
+      <CodeBlock code={content.initCode} language="javascript" />
     </section>
   )
 }

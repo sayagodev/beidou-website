@@ -14,7 +14,7 @@ export function Configuration() {
 
       <p className="config__desc">{content.desc}</p>
 
-      <CodeBlock code={content.configCode} />
+      <CodeBlock code={content.configCode} language="javascript" />
     </section>
   )
 }

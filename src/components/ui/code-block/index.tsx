@@ -1,12 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { cn } from '@/lib/utils'
+import Prism from 'prismjs'
+import 'prismjs/components/prism-javascript'
+import 'prismjs/components/prism-jsx'
+import 'prismjs/components/prism-markup'
+import 'prismjs/components/prism-css'
+import 'prismjs/components/prism-bash'
 import './code-block.css'
+import { Copy } from 'lucide-react'
 
 interface CodeBlockTab {
   label: string
   code: string
+  language?: string
 }
 
 interface CodeBlockProps {
@@ -16,9 +24,37 @@ interface CodeBlockProps {
   className?: string
 }
 
-export function CodeBlock({ tabs, code, className }: CodeBlockProps) {
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
+function highlightCode(code: string, language?: string): string {
+  const lines = code.split('\n')
+  const lang = language?.toLowerCase()
+  const grammar = lang && Prism.languages[lang] ? Prism.languages[lang] : null
+
+  return lines
+    .map((line) => {
+      if (!grammar) return `<span class="line">${escapeHtml(line)}</span>`
+      const highlighted = Prism.highlight(line, grammar, lang!)
+      return `<span class="line">${highlighted}</span>`
+    })
+    .join('\n')
+}
+
+export function CodeBlock({ tabs, code, language, className }: CodeBlockProps) {
   const [activeTab, setActiveTab] = useState(0)
   const content = tabs ? tabs[activeTab]?.code : code
+  const contentLanguage = tabs ? tabs[activeTab]?.language : language
+
+  const highlighted = useMemo(
+    () => highlightCode(content || '', contentLanguage),
+    [content, contentLanguage],
+  )
 
   return (
     <div className={cn('code-block', className)}>
@@ -45,18 +81,10 @@ export function CodeBlock({ tabs, code, className }: CodeBlockProps) {
             if (content) navigator.clipboard.writeText(content)
           }}
         >
-          <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>
-            content_copy
-          </span>
+          <Copy />
         </button>
         <pre>
-          <code>
-            {content?.split('\n').map((line, i) => (
-              <span key={i} className="line">
-                {line}
-              </span>
-            ))}
-          </code>
+          <code dangerouslySetInnerHTML={{ __html: highlighted }} />
         </pre>
       </div>
     </div>

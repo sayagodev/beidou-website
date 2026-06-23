@@ -15,8 +15,8 @@ const installationContent = {
     pnpm: 'pnpm',
     yarn: 'yarn',
     cdn: 'CDN',
-    installCmd: 'npm install beidou-nav',
-    initCode: `import Beidou from 'beidou-nav';
+    installCmd: 'npm install @sayagodev/beidou',
+    initCode: `import Beidou from '@sayagodev/beidou/min';
 
 // Initialize with default options
 const beidou = new Beidou();

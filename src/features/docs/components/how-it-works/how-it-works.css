@@ -118,7 +118,7 @@
   }
 
   .how-it-works__state-diagram {
-    background: var(--code-bg);
+    background: #1e1e2e;
     border: 1px solid var(--border);
     padding: var(--space-8);
     overflow-x: auto;
