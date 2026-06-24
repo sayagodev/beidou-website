@@ -1,11 +1,17 @@
 @layer components {
   .how-it-works__steps {
     display: flex;
-    flex-direction: if(media(width >=48rem): row; else: column);
+    flex-direction: column;
     gap: 0;
     margin-block-end: var(--space-12);
     border: 1px solid var(--border);
     background: var(--surface-low);
+  }
+
+  @media (width >= 48rem) {
+    .how-it-works__steps {
+      flex-direction: row;
+    }
   }
 
   .how-it-works__step {
@@ -14,7 +20,13 @@
     border-block-end: 1px solid var(--border);
 
     &:not(:last-child) {
-      border-inline-end: if(media(width >=48rem): 1px solid var(--border); else: none);
+      border-inline-end: none;
+    }
+  }
+
+  @media (width >= 48rem) {
+    .how-it-works__step:not(:last-child) {
+      border-inline-end: 1px solid var(--border);
     }
   }
 

@@ -1,8 +1,8 @@
 @layer components {
   .nav-bar {
     position: fixed;
-    inset-block-start: if(media(width >=48rem): 1rem; else: 0);
-    inset-inline: if(media(width >=48rem): var(--gutter); else: 0);
+    inset-block-start: 0;
+    inset-inline: 0;
     z-index: var(--z-nav);
     display: flex;
     align-items: center;
@@ -14,6 +14,13 @@
     background: var(--surface-lowest);
     border-block-end: 1px solid var(--border);
     transition: background var(--transition), border-color var(--transition);
+  }
+
+  @media (width >= 48rem) {
+    .nav-bar {
+      inset-block-start: 1rem;
+      inset-inline: var(--gutter);
+    }
   }
 
   .nav-bar__brand {
@@ -31,7 +38,7 @@
   }
 
   .nav-bar__cta {
-    display: if(media(width >=48rem): inline-flex; else: none);
+    display: none;
     padding: var(--space-1) var(--space-3);
     background: var(--primary);
     color: var(--primary-foreground);
@@ -46,12 +53,30 @@
     }
   }
 
+  @media (width >= 48rem) {
+    .nav-bar__cta {
+      display: inline-flex;
+    }
+  }
+
   .nav-bar__menu-btn {
-    display: if(media(width >=48rem): none; else: flex);
+    display: flex;
     padding: var(--space-2);
     background: none;
     border: none;
     color: var(--on-surface);
     cursor: pointer;
+  }
+
+  @media (width >= 48rem) {
+  .nav-bar__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .nav-bar__menu-btn {
+      display: none;
+    }
   }
 }

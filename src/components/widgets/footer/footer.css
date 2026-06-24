@@ -33,7 +33,13 @@
   }
 
   .footer__utf {
-    display: if(media(width >=40rem): block; else: none);
+    display: none;
+  }
+
+  @media (width >= 40rem) {
+    .footer__utf {
+      display: block;
+    }
   }
 
   .footer__link {
@@ -45,9 +51,14 @@
     transition: color var(--transition-fast);
 
     & span {
-      display: if(media(width >=40rem): block; else: none);
+      display: none;
     }
 
+    @media (width >= 40rem) {
+      & span {
+        display: block;
+      }
+    }
 
     & svg {
       transform: translateY(-1px);

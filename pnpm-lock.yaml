@@ -39,6 +39,9 @@ importers:
         specifier: 19.2.4
         version: 19.2.4(react@19.2.4)
     devDependencies:
+      '@intlayer/swc':
+        specifier: ^8.12.4
+        version: 8.12.4
       '@types/node':
         specifier: ^20
         version: 20.19.43
@@ -586,6 +589,10 @@ packages:
 
   '@intlayer/remote-dictionaries-entry@8.12.4':
     resolution: {integrity: sha512-s1ezBbZ4Z53xioj51N3rPjvxDAFpNSnJOnyhfuPZY9voOwVSjvHoXOBnzfsWiihENRvCl7efAGiytOuXkmDJzA==}
+    engines: {node: '>=14.18'}
+
+  '@intlayer/swc@8.12.4':
+    resolution: {integrity: sha512-34bihHzCSGbg7wDXFuF+rbzAcxwFVT93hZTKTGBjYjAUY1ukLXnPtBcwgE+3I6Etj3wpT6TNGWxJ7LOwECfk4Q==}
     engines: {node: '>=14.18'}
 
   '@intlayer/types@8.12.4':
@@ -3824,6 +3831,8 @@ snapshots:
       '@intlayer/config': 8.12.4(react@19.2.4)
     transitivePeerDependencies:
       - react
+
+  '@intlayer/swc@8.12.4': {}
 
   '@intlayer/types@8.12.4': {}
 

@@ -5,9 +5,15 @@
 
   .features__grid {
     display: grid;
-    grid-template-columns: if(media(width >=48rem): repeat(2, 1fr); else: 1fr);
+    grid-template-columns: 1fr;
     border: 1px solid var(--border);
     background: var(--surface-low);
+  }
+
+  @media (width >= 48rem) {
+    .features__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   .features__card {

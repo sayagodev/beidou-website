@@ -21,6 +21,7 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@intlayer/swc": "^8.12.4",
     "@types/node": "^20",
     "@types/prismjs": "^1.26.6",
     "@types/react": "^19",

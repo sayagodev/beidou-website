@@ -1,6 +1,7 @@
 import { useIntlayer } from 'next-intlayer/server'
 import './nav-bar.css'
 import { MenuIcon } from 'lucide-react'
+import { LocaleSwitcher } from './_components/locale-switcher'
 
 interface NavBarProps {
   onToggleSidebar?: () => void
@@ -18,6 +19,7 @@ export function NavBar({ onToggleSidebar }: NavBarProps) {
       </a>
 
       <div className="nav-bar__actions">
+        <LocaleSwitcher />
         <a href="#installation" className="nav-bar__cta">
           {content.cta}
         </a>
