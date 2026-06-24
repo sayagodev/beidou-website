@@ -19,8 +19,8 @@ const attributesTableContent = {
       es: 'Define un contexto de navegacion. Los elementos con este atributo revelaran los objetivos hijos cuando se activen.',
     }),
     targetDesc: t({
-      en: 'Marks an element as a navigation target. Must be inside a context or the body (root context). The value is the key to press.',
-      es: 'Marca un elemento como objetivo de navegacion. Debe estar dentro de un contexto o el body (contexto raiz). El valor es la tecla a presionar.',
+      en: 'Marks an element as a navigation target. Must be inside a context or the body (root context). The value is the target ID.',
+      es: 'Marca un elemento como objetivo de navegacion. Debe estar dentro de un contexto o el body (contexto raiz). El valor es el ID del objectivo.',
     }),
     backDesc: t({
       en: 'Used to navigate to the parent context.',

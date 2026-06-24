@@ -23,8 +23,8 @@ const featuresGridContent = {
         es: 'Tamaño Pequeño',
       }),
       desc: t({
-        en: "Weighs in at approximately ~2.7KB gzipped. It won't bloat your application bundle.",
-        es: 'Pesa aproximadamente ~2.7KB gzipped. No aumentara el tamaño de tu bundle.',
+        en: "Weighs in at approximately ~2.9KB gzipped. It won't bloat your application bundle.",
+        es: 'Pesa aproximadamente ~2.9KB gzipped. No aumentara el tamaño de tu bundle.',
       }),
     },
     frameworkAgnostic: {

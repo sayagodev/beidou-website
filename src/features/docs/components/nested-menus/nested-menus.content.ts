@@ -11,15 +11,21 @@ const nestedMenusContent = {
       en: 'Create complex hierarchies using contexts.',
       es: 'Crea jerarquias complejas usando contextos.',
     }),
-    code: `<nav data-ko-ctx="main">
-  <button data-ko-target="S">Settings</button>
-
+    code: ` {/* body with data-ko-ctx="root" exist */}
+  <button data-ko-target="settings">⚙️ Settings</button>
   <div data-ko-ctx="settings">
-    <button data-ko-target="P">Profile</button>
-    <button data-ko-target="N">Notifications</button>
-    <button data-ko-back="B">Back</button>
+    <button data-ko-target="profile">Profile</button>
+    <button data-ko-target="security">Security</button>
+    <button data-ko-back><- Back</button>
   </div>
-</nav>`,
+  <div data-ko-ctx="profile">
+    <button onClick={edit()}>Edit</button>
+    <button data-ko-back><- Back</button>
+  </div>
+  <div data-ko-ctx="security">
+    <button onClick={changePw()}>Change Password</button>
+    <button data-ko-back><- Back</button>
+  </div>`,
   },
 } satisfies Dictionary
 

@@ -1,5 +1,5 @@
 import { useIntlayer } from 'next-intlayer/server'
-import { Terminal, FileText, BookOpen, Code, MessageCircle } from 'lucide-react'
+import { FileText, BookOpen, Code, MessageCircle } from 'lucide-react'
 import './footer.css'
 
 export function Footer() {
@@ -17,7 +17,7 @@ export function Footer() {
         </span>
       </div>
       <div className="footer__right">
-        <a className="footer__link" href="#docs">
+        <a className="footer__link" href="https://sayago.dev" target='_blank'>
           <BookOpen size={14} className="footer__icon" />
           <span>{content.me}</span>
         </a>
@@ -25,7 +25,7 @@ export function Footer() {
           <Code size={14} className="footer__icon" />
           <span>{content.github}</span>
         </a>
-        <a className="footer__link" href="mailto:hi@sayago.dev">
+        <a className="footer__link" href="mailto:hi@sayago.dev" target='_blank'>
           <MessageCircle size={14} className="footer__icon" />
           <span>{content.email}</span>
         </a>

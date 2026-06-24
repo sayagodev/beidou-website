@@ -21,12 +21,12 @@ export function AttributesTable() {
     {
       attr: <span className="attributes__attr">data-ko-target</span>,
       desc: content.targetDesc,
-      example: <code className="attributes__example">&lt;button data-ko-target=&quot;S&quot;&gt;Save&lt;/button&gt;</code>,
+      example: <code className="attributes__example">&lt;button data-ko-target=&quot;save&quot;&gt;Save&lt;/button&gt;</code>,
     },
     {
       attr: <span className="attributes__attr">data-ko-back</span>,
       desc: content.backDesc,
-      example: <code className="attributes__example">&lt;button data-ko-back=&quot;B&quot;&gt;Back&lt;/button&gt;</code>,
+      example: <code className="attributes__example">&lt;button data-ko-back&gt;Back&lt;/button&gt;</code>,
     },
     {
       attr: <span className="attributes__attr">data-ko-skip</span>,

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@knadh/oat": "^0.6.2",
-    "@sayagodev/beidou": "^1.1.1",
+    "@sayagodev/beidou": "^1.2.0",
     "clsx": "^2.1.1",
     "intlayer": "^8.12.4",
     "lucide-react": "^1.21.0",

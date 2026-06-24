@@ -6,3 +6,5 @@ allowBuilds:
 ignoredBuiltDependencies:
   - sharp
   - unrs-resolver
+minimumReleaseAgeExclude:
+  - '@sayagodev/beidou@1.2.0'

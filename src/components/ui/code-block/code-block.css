@@ -75,7 +75,7 @@
 .code-block pre {
   margin: 0;
   font-family: var(--font-code);
-  font-size: var(--text-8);
+  font-size: var(--text-6);
   background-color: var(--code-bg);
   color: #eaeaea;
   overflow-x: auto;

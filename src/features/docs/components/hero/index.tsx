@@ -7,6 +7,7 @@ export function Hero() {
 
   return (
     <section className="hero" id="hero">
+
       <div className="hero__window-dots">
         <div className="hero__window-dot" style={{ background: 'var(--secondary)' }} />
         <div className="hero__window-dot" style={{ background: 'var(--outline-variant)' }} />
