@@ -9,21 +9,27 @@
   }
 }
 
-.code-block__header {
+/* Override OAT's light tablist for dark code block theme */
+.code-block .code-block__tablist {
   display: flex;
-  border-block-end: 1px solid rgb(255 255 255 / 0.1);
   background: rgb(0 0 0 / 0.2);
+  border-block-end: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 0;
+  padding: 0;
+  gap: 0;
   font-family: var(--font-code);
   font-size: var(--text-7);
   overflow-x: auto;
 }
 
-.code-block__tab {
+.code-block .code-block__tab {
   padding: var(--space-2) var(--space-4);
   color: rgb(255 255 255 / 0.6);
+  background: transparent;
   border: none;
-  background: none;
   border-block-end: 2px solid transparent;
+  border-radius: 0;
+  box-shadow: none;
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
@@ -39,7 +45,12 @@
     color: #fff;
     border-block-end-color: var(--secondary);
     background: #1e1e2e;
+    box-shadow: none;
   }
+}
+
+.code-block__panel {
+  padding: 0;
 }
 
 .code-block__body {

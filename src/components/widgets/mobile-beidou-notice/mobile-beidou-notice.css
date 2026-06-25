@@ -1,0 +1,39 @@
+@layer components {
+  .mobile-beidou-toggle {
+    position: fixed;
+    inset-block-end: var(--space-6);
+    inset-inline-end: var(--space-6);
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 3rem;
+    block-size: 3rem;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-medium);
+    box-shadow: var(--shadow-large);
+    cursor: pointer;
+    font-family: var(--font-label);
+    font-size: var(--text-8);
+    font-weight: var(--font-bold);
+    letter-spacing: 0.05em;
+    transition: transform var(--transition-fast);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    outline: none;
+  }
+
+  .mobile-beidou-toggle:hover,
+  .mobile-beidou-toggle:active,
+  .mobile-beidou-toggle:focus,
+  .mobile-beidou-toggle:focus-visible {
+    background-color: #c2727a !important;
+    color: #fff !important;
+    outline: none;
+  }
+
+  .mobile-beidou-toggle:active {
+    transform: scale(0.96);
+  }
+}

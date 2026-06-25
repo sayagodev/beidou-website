@@ -1,12 +1,6 @@
 @layer components {
   .locale-switcher {
-    display: none;
-  }
-
-  @media (width >=48rem) {
-    .locale-switcher {
-      display: block;
-    }
+    display: block;
   }
 
   .locale-switcher__trigger {

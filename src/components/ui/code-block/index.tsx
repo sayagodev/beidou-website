@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import Prism from 'prismjs'
 import 'prismjs/components/prism-javascript'
@@ -46,40 +46,19 @@ function highlightCode(code: string, language?: string): string {
     .join('\n')
 }
 
-export function CodeBlock({ tabs, code, language, className }: CodeBlockProps) {
-  const [activeTab, setActiveTab] = useState(0)
-  const content = tabs ? tabs[activeTab]?.code : code
-  const contentLanguage = tabs ? tabs[activeTab]?.language : language
-
+function CodePanel({ code, language }: { code: string; language?: string }) {
   const highlighted = useMemo(
-    () => highlightCode(content || '', contentLanguage),
-    [content, contentLanguage],
+    () => highlightCode(code, language),
+    [code, language],
   )
 
   return (
-    <div className={cn('code-block', className)}>
-      {tabs && (
-        <div className="code-block__header" role="tablist">
-          {tabs.map((tab, i) => (
-            <button
-              key={tab.label}
-              role="tab"
-              aria-selected={i === activeTab}
-              className="code-block__tab"
-              onClick={() => setActiveTab(i)}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      )}
+    <div role="tabpanel" className="code-block__panel">
       <div className="code-block__body">
         <button
           className="code-block__copy"
           aria-label="Copy code"
-          onClick={() => {
-            if (content) navigator.clipboard.writeText(content)
-          }}
+          onClick={() => navigator.clipboard.writeText(code)}
         >
           <Copy />
         </button>
@@ -87,6 +66,33 @@ export function CodeBlock({ tabs, code, language, className }: CodeBlockProps) {
           <code dangerouslySetInnerHTML={{ __html: highlighted }} />
         </pre>
       </div>
+    </div>
+  )
+}
+
+export function CodeBlock({ tabs, code, language, className }: CodeBlockProps) {
+  if (tabs) {
+    return (
+      <div className={cn('code-block', className)}>
+        <ot-tabs>
+          <div role="tablist" className="code-block__tablist">
+            {tabs.map((tab) => (
+              <button key={tab.label} role="tab" className="code-block__tab">
+                {tab.label}
+              </button>
+            ))}
+          </div>
+          {tabs.map((tab) => (
+            <CodePanel key={tab.label} code={tab.code} language={tab.language} />
+          ))}
+        </ot-tabs>
+      </div>
+    )
+  }
+
+  return (
+    <div className={cn('code-block', className)}>
+      <CodePanel code={code || ''} language={language} />
     </div>
   )
 }
