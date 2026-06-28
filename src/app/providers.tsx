@@ -2,7 +2,7 @@ import BeidouProvider from '@/components/providers/beidou-provider'
 import MobileBeidouNotice from '@/components/widgets/mobile-beidou-notice'
 import { IntlayerClientProvider } from 'next-intlayer'
 
-export async function Providers({
+export function Providers({
   children,
   locale,
 }: {

@@ -1,28 +1,12 @@
 import type { Metadata } from "next";
 import type { NextLayoutIntlayer } from "next-intlayer";
-import Script from "next/script";
-import { JetBrains_Mono } from "next/font/google";
-import localFont from "next/font/local";
-
 import { Providers } from "../providers";
 
+export function generateStaticParams() {
+  return [{ locale: 'es' }]
+}
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://beidou.dev";
-
-const beidou = localFont({
-  src: [
-    {
-      path: "../../../public/font/hanyi-olive-body-jane.woff2",
-      weight: "100 900",
-      style: "normal"
-    },
-  ],
-  variable: '--font-beidou'
-})
-
-const jetBrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-});
 
 const metadataByLocale: Record<string, { title: string; description: string }> = {
   en: {
@@ -73,14 +57,9 @@ const LocaleLayout: NextLayoutIntlayer = async ({ children, params }) => {
   const { locale } = await params
 
   return (
-    <html lang={locale} className={`${jetBrainsMono.variable} ${beidou.variable}`} suppressHydrationWarning>
-      <body data-ko-ctx="root">
-        <Providers locale={locale}>
-          {children}
-        </Providers>
-        <Script src="/oat.min.js" strategy="beforeInteractive" />
-      </body>
-    </html>
+    <Providers locale={locale as string}>
+      {children}
+    </Providers>
   );
 }
 
