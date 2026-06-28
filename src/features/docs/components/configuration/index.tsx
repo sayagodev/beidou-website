@@ -1,4 +1,4 @@
-import { useIntlayer } from 'next-intlayer/server'
+import { useIntlayer } from 'next-intlayer'
 import { CodeBlock } from '@/components/ui/code-block'
 import { Settings } from 'lucide-react'
 import './configuration.css'

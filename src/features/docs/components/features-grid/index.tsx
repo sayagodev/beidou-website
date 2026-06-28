@@ -1,4 +1,4 @@
-import { useIntlayer } from 'next-intlayer/server'
+import { useIntlayer } from 'next-intlayer'
 import './features-grid.css'
 import { Code, Gauge, Package, Puzzle, Star } from 'lucide-react'
 

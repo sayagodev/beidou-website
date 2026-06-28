@@ -1,4 +1,4 @@
-import { useIntlayer } from 'next-intlayer/server'
+import { useIntlayer } from 'next-intlayer'
 import { FileText, BookOpen, Code, MessageCircle } from 'lucide-react'
 import './footer.css'
 

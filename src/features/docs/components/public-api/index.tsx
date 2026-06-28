@@ -1,4 +1,4 @@
-import { useIntlayer } from 'next-intlayer/server'
+import { useIntlayer } from 'next-intlayer'
 import { FunctionSquare } from 'lucide-react'
 import './public-api.css'
 

@@ -1,4 +1,4 @@
-import { useIntlayer } from 'next-intlayer/server'
+import { useIntlayer } from 'next-intlayer'
 import './hero.css'
 import { CodeIcon, CornerDownLeft, SquarePlus } from 'lucide-react'
 

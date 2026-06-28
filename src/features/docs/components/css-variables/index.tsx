@@ -1,4 +1,4 @@
-import { useIntlayer } from 'next-intlayer/server'
+import { useIntlayer } from 'next-intlayer'
 import { DocTable } from '@/components/ui/table'
 import { Palette } from 'lucide-react'
 import './css-variables.css'

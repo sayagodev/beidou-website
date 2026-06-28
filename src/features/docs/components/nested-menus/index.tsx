@@ -1,4 +1,4 @@
-import { useIntlayer } from 'next-intlayer/server'
+import { useIntlayer } from 'next-intlayer'
 import { CodeBlock } from '@/components/ui/code-block'
 import { Network } from 'lucide-react'
 import './nested-menus.css'

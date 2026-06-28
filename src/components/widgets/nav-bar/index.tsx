@@ -1,4 +1,4 @@
-import { useIntlayer } from 'next-intlayer/server'
+import { useIntlayer } from 'next-intlayer'
 import './nav-bar.css'
 import { MenuIcon } from 'lucide-react'
 import { LocaleSwitcher } from './_components/locale-switcher'

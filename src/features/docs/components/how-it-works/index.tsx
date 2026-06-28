@@ -1,4 +1,4 @@
-import { useIntlayer } from 'next-intlayer/server'
+import { useIntlayer } from 'next-intlayer'
 import './how-it-works.css'
 import { Cpu, Workflow } from 'lucide-react'
 
@@ -23,27 +23,21 @@ export function HowItWorks() {
             <span className="how-it-works__step-num how-it-works__step-num--primary">1</span>
             {content.step1.label}
           </h4>
-          <p className="how-it-works__step-text">
-            {content.step1.text}
-          </p>
+          <p className="how-it-works__step-text" dangerouslySetInnerHTML={{ __html: content.step1.text }} />
         </div>
         <div className="how-it-works__step">
           <h4 className="how-it-works__step-header">
             <span className="how-it-works__step-num how-it-works__step-num--secondary">2</span>
             {content.step2.label}
           </h4>
-          <p className="how-it-works__step-text">
-            {content.step2.text}
-          </p>
+          <p className="how-it-works__step-text" dangerouslySetInnerHTML={{ __html: content.step2.text }} />
         </div>
         <div className="how-it-works__step">
           <h4 className="how-it-works__step-header">
             <span className="how-it-works__step-num how-it-works__step-num--primary">3</span>
             {content.step3.label}
           </h4>
-          <p className="how-it-works__step-text">
-            {content.step3.text}
-          </p>
+          <p className="how-it-works__step-text" dangerouslySetInnerHTML={{ __html: content.step3.text }} />
         </div>
       </div>
 
