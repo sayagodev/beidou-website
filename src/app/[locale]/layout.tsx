@@ -6,7 +6,7 @@ export function generateStaticParams() {
   return [{ locale: 'es' }]
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://beidou.dev";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://beidou.sayago.dev";
 
 const metadataByLocale: Record<string, { title: string; description: string }> = {
   en: {
