@@ -71,13 +71,13 @@ export function Faq() {
           { question: content.q4Question, answer: content.q4Answer },
         ].map((item, i) => (
           <details key={i} className="faq__item">
-            <summary>{item.question}</summary>
+            <summary role='button'>{item.question}</summary>
             <FaqAnswer html={item.answer} />
           </details>
         ))}
 
         <details className="faq__item">
-          <summary>{content.q5Question}</summary>
+          <summary role='button'>{content.q5Question}</summary>
           <FaqTabsAnswer code={content.q5AnswerCode} preview={content.q5AnswerPreview} />
         </details>
 
@@ -89,7 +89,7 @@ export function Faq() {
           { question: content.q10Question, answer: content.q10Answer },
         ].map((item, i) => (
           <details key={i + 5} className="faq__item">
-            <summary>{item.question}</summary>
+            <summary role='button'>{item.question}</summary>
             <FaqAnswer html={item.answer} />
           </details>
         ))}

@@ -357,3 +357,13 @@ body {
   inline-size: 10px;
   border-radius: var(--radius-full);
 }
+
+.toast {
+  font-family: var(--font-label);
+  border-inline-start-color: var(--secondary);
+
+  & .toast-title {
+    font-family: var(--font-heading);
+    color: var(--secondary);
+  }
+}
